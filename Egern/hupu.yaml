@@ -13,7 +13,7 @@ rewrites:
       status: 200
       headers:
         Content-Type: application/json
-      body: '{{"ad_code":-41,"show_type":0,"ads":[]}}'
+      body: '{"ad_code":-41,"show_type":0,"ads":[]}'
 - match: (?i)^https://fairy\.mobileapi\.hupu\.com/gallery/getmod2
   actions:
   - respond:
