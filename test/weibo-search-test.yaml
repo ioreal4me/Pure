@@ -21,10 +21,6 @@ rewrites:
   actions:
   - response_body:
       jq: del(.ad, .advertises, .trends) | if .statuses then .statuses |= map(select(.mblogtypename != "广告")) | .statuses |= map(select(.mblogtypename != "廣告")) | .statuses |= map(select(.mblogtypename != "热推")) | .statuses |= map(select(.mblogtypename != "熱推")) | .statuses |= map(select(.promotion.type != "ad")) end
-- match: ^https?:\/\/api\.weibo\.cn\/2\/(searchall|search\/container_timeline|search\/container_discover)\?
-  actions:
-  - response_body:
-      jq: if .items then .items |= map(select(.data.mblogtypename != "广告")) | .items |= map(select(.data.mblogtypename != "廣告")) | .items |= map(select(.data.ad_state != 1)) end
 - match: ^https?:\/\/weibointl\.api\.weibo\.cn\/portal\.php\?a=get_coopen_ads&
   actions:
   - response_body:
@@ -41,6 +37,13 @@ rewrites:
   actions:
   - response_body:
       jq: if .data.cards then .data.cards[].items |= map(select(.type != "personal_vip")) | .data.cards |= map(select((.items | length) > 0)) end
+scriptings:
+- http_response:
+    name: 微博搜索去广告
+    match: ^https?:\/\/api\.weibo\.cn\/2\/searchall\?
+    script_url: https://raw.githubusercontent.com/ioreal4me/iOS/main/Script/weibo-search.js
+    body_required: true
+    max_size: 4194304
 mitm:
   hostnames:
     includes:
