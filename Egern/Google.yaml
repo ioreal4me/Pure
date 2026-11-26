@@ -1,6 +1,6 @@
 name: Google重定向
 description: 将.cn重定向至.com
-icon: https://raw.githubusercontent.com/ioreal4me/Pure/refs/heads/main/icon/Google.png
+icon: https://raw.githubusercontent.com/ioreal4me/iOS/refs/heads/main/icon/Google.png
 dns: {}
 rewrites:
 - match: ^https?:\/\/(www.)?(g|google)\.cn
