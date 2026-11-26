@@ -1,11 +1,22 @@
 name: 淘宝
-description: 过滤淘宝广告
+description: 过滤淘宝 / 闲鱼 App 广告（广告下发接口、广告图直链、开屏、埋点统计域名）；纯本地规则，零远程脚本；需开启 MITM 并信任证书。
+author: FFDNS
+homepage: https://github.com/Thelongdarkorg/loon-plugins
 icon: https://raw.githubusercontent.com/ioreal4me/Pure/refs/heads/main/icon/taobao.png
-# merged from: Thelongdarkorg/loon-plugins taobao_splash_ad_block.plugin
-# UA 串 %E6%B7%98%E5%AE%9D* 即「淘宝」的 URL 编码，原样保留，只拦淘宝 UA 的 amdc 下发，避免误伤其他 App 的同名路径。
-# 与闲鱼模块里 acs.m.goofish.com 上的同名接口是不同主机，两模块同开不冲突、也不重复。
+# merged from: Thelongdarkorg/loon-plugins taobao_splash_ad_block.plugin（规则更新 2026-09-18）→ 全部转换：1 条 AND 组合规则 + 6 条域名 REJECT + 15 条 reject-dict 重写，零脚本
+# 2026-11-25 追加（非上游）：mtop.taobao.shot.resources.load —— Kris 在 Egern 记录里抓到它在冷启动时以 200 放行，
+#   紧接着点开淘宝就出开屏广告，时机与接口名（shot = 开屏画面，resources.load = 拉素材清单）都对得上；
+#   12:08 后抓到一次它的响应 body 只有 {}（Kris 确认是在响应页看的）：MTOP 正常响应必带 api/data/ret/v 信封，
+#   裸 {} 不是服务器原样，是这条 reject-dict 已命中、把素材清单替换成空字典的结果。
+# 转换说明：Loon 的 DOMAIN,xxx,REJECT 按文档转为 Egern rules 的 domain 精确匹配；
+#   AND 组合规则照闲鱼模块的已用写法转换（and 嵌 url_regex + user_agent，文档未直接给此嵌套示例，为推断写法）；
+#   UA 串 %E6%B7%98%E5%AE%9D* 即「淘宝」的 URL 编码，原样保留，只拦淘宝 UA 的 amdc 下发，避免误伤其他 App 的同名路径。
+# dropped: 上游默认注释关闭的 3 条未收入（启用可能影响非广告功能，需要时按上游原文件自行去掉注释添加）：
+#   mtop.fliggy.crm.screen.(allresource|predict)、mtop.trip.activity.querytmsresources、
+#   mtop.taobao.(volvo.secondfloor.getconfig|wireless.home.newface.awesome.get)。
+# 注意：其中 idle.home.welcome 与 idlecommerce.splash.ads 两条走的是 acs.m.taobao.com，
+#   与闲鱼模块里 acs.m.goofish.com 上的同名接口是不同主机，两模块同开不冲突、也不重复。
 
-dns: {}
 rules:
   # 移除广告下发请求（限定淘宝 UA）
   - and:
@@ -92,8 +103,11 @@ url_rewrites:
 
 body_rewrites:
   # 开屏活动模板：清空图片/视频素材、关掉 enable（fmz200 myBlockAds.js「淘宝-开屏活动」原逻辑转 basic jq）
+  # 2026-11-26 修正匹配：真实 URL 是 /popcdn/2/config.json（2026-11-25 23:57 记录 #125，↓40 KB，200）——
+  #   原写法 /\w+\.json 匹配不了带斜杠的多级路径，MITM 解密了但 jq 根本没触发；改为整主机匹配。
+  #   字段路径（res/mainRes/enable）对 config.json 是否成立，待 Kris 打开 #125 响应 body 核对后再定。
   - response_jq:
-      match: '^https://poplayer\.template\.alibaba\.com/\w+\.json'
+      match: '^https://poplayer\.template\.alibaba\.com/'
       filter: '.res.images = [] | .res.videos = [] | .enable = false | .mainRes.images = []'
   # 开屏视频广告：时长置 0、清空视频资源与缓存（fmz200 myBlockAds.js「淘宝-开屏视频广告」原逻辑转 basic jq）
   - response_jq:
@@ -106,7 +120,11 @@ mitm:
     - guide-acs.m.taobao.com
     - heic.alicdn.com
     - gw.alicdn.com
+    - img.alicdn.com
     - poplayer.template.alibaba.com
+    # img.alicdn.com（2026-11-26 排查期加入）：imgextra 素材图/动图的另一个常用主机，config.json 里那条
+    #   图片地址的域名在截图里被截断，大概率是它或 gw.alicdn.com（gw 已在名单）。开屏若复发，
+    #   靠它看清动图素材的完整下载地址；确认收工后可删。
     # 2026-11-25 诊断结案：13:34 窗口的两个嫌疑都已排除，MITM 名单恢复为原始 4 个主机。
     # yixiu-abtest.alicdn.com（↓145 KB）：Kris 打开其响应确认是全 App 的 AB 实验配置（rootDomains / experiments /
     # ratioRanges，可见实验是 usePcdn、dwinstance_newplay 等视频播放技术项，launchLayers 为空、无广告素材），不能拦。
