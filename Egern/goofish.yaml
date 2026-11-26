@@ -1,6 +1,6 @@
 name: 闲鱼
 description: 过滤闲鱼广告
-icon: https://raw.githubusercontent.com/ioreal4me/iOS/refs/heads/main/icon/goofish.png
+icon: https://raw.githubusercontent.com/ioreal4me/iOS/main/icon/goofish.png
 dns: {}
 
 rules:
@@ -178,7 +178,7 @@ scriptings:
   - http_response:
       name: 闲鱼
       match: '^https://(?:acs|g-acs)\.m\.goofish\.com/gw/(?:mtop\.taobao\.idlehome\.home\.nextfresh|mtop\.taobao\.idle\.local\.home|mtop\.taobao\.idlehome\.home\.circle\.list|mtop\.taobao\.idle\.local\.nearby\.itemdetail\.enter|mtop\.taobao\.idlemtopsearch\.search|mtop\.taobao\.idle\.local\.flow\.plat\.section)(?:/|$)'
-      script_url: 'https://raw.githubusercontent.com/ioreal4me/iOS/refs/heads/main/Script/goofish.js'
+      script_url: 'https://raw.githubusercontent.com/ioreal4me/iOS/main/Script/goofish.js'
       update_interval: 86400
       max_size: 2097152
       timeout: 30

@@ -1,6 +1,6 @@
 name: 闲鱼
 description: 去除首页、个人页、搜索页、搜索结果页、关注页、消息页及商品详情页的推广和广告。
-icon: https://raw.githubusercontent.com/ioreal4me/iOS/refs/heads/main/icon/goofish.png
+icon: https://raw.githubusercontent.com/ioreal4me/iOS/main/icon/goofish.png
 dns: {}
 
 rules:
