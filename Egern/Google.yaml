@@ -1,0 +1,14 @@
+name: Google重定向
+description: 将.cn重定向至.com
+icon: https://raw.githubusercontent.com/qiny69-oi/7788/refs/heads/main/icon/Google.png
+dns: {}
+rewrites:
+- match: ^https?:\/\/(www.)?(g|google)\.cn
+  actions:
+  - redirect:
+      status: 302
+      location: https://www.google.com
+mitm:
+  hostnames:
+    includes:
+    - www.google.cn
