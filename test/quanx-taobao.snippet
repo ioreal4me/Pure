@@ -1,0 +1,27 @@
+; 淘宝 QuanX 测试 (rewrites) — converted from Egern/taobao.yaml (url_rewrites 15 + body_rewrites 2 + AND rule 1)
+; Domain REJECT rules live in quanx-taobao-filter.snippet (filters cannot live in a rewrite snippet).
+; AND rule: source is url_regex + user_agent -> REJECT. QuanX filter syntax has no AND rule, but the
+; documented url-and-header rewrite type (sample-1.9.0-inapp.conf) matches URL regex AND header-string
+; regex, so it is used here to preserve the AND semantics (UA = %E6%B7%98%E5%AE%9D* i.e. 淘宝*).
+; If a plain url reject is preferred instead, swap the amdc line for the commented one below it
+; (note: that broadens the rule to ALL amdc/mobileDispatch requests regardless of user-agent).
+hostname = acs.m.taobao.com, guide-acs.m.taobao.com, heic.alicdn.com, gw.alicdn.com, img.alicdn.com, poplayer.template.alibaba.com
+^http://.+/amdc/mobileDispatch \r\nUser-Agent:[^\r\n]*%E6%B7%98%E5%AE%9D url-and-header reject
+;^http://.+/amdc/mobileDispatch url reject
+^https://acs\.m\.taobao\.com/gw/mtop\.taobao\.shot\.resources\.load/ url reject-dict
+^https://acs\.m\.taobao\.com/gw/mtop\.alibaba\.advertisementservice\.getadv url reject-dict
+^https://acs\.m\.taobao\.com/gw/mtop\.alimama\.etao\.config\.query/.+?etao_advertise url reject-dict
+^https://acs\.m\.taobao\.com/gw/mtop\.etao\.noah\.query/.+tao_splash url reject-dict
+^https://acs\.m\.taobao\.com/gw/mtop\.o2o\.ad\.gateway\.get url reject-dict
+^https://acs\.m\.taobao\.com/gw/mtop\.taobao\.idle\.home\.welcome url reject-dict
+^https://acs\.m\.taobao\.com/gw/mtop\.taobao\.idlecommerce\.splash\.ads url reject-dict
+^https://acs\.m\.taobao\.com/gw/mtop\.alimusic\.common\.mobileservice\.startinit url reject-dict
+^https://acs\.m\.taobao\.com/gw/mtop\.film\.mtopadvertiseapi\.queryadvertise url reject-dict
+^https://guide-acs\.m\.taobao\.com/gw/mtop\.cainiao\.adx\.flyad\.getad url reject-dict
+^https://guide-acs\.m\.taobao\.com/gw/mtop\.taobao\.wireless\.home\.splash\.awesome\.get url reject-dict
+^https://heic\.alicdn\.com/imgextra/i\d/[A-Za-z0-9_!]+-\d+-tps-\d+-\d+\.png_\d+x\d+q\d+\.jpg_\.heic$ url reject-dict
+^https://heic\.alicdn\.com/imgextra/i\d/[A-Za-z0-9_!]+-\d+-tps-\d+-\d+\.jpg_\d+x\d+q\d+\.jpg_\.heic$ url reject-dict
+^https://heic\.alicdn\.com/imgextra/i\d/\d*/?[\w!]+-\d-(?:octopus|tps)-(?:1080|1125)-\d{4}\.(?:jpg|png)_(?:1\d{3}|9\d{2})x(?:\d|1\d{3}|9\d{2})q[59]0 url reject-dict
+^https?://gw\.alicdn\.com/imgextra/i\d+/[^/]+_!!\d+-\d+-tps-(720-1280|1080-1920|1125-1602|1242-2208)\.(jpg|png|jpeg)_[^/]+\.webp url reject-dict
+^https://poplayer\.template\.alibaba\.com/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-taobao.js
+^https://guide-acs\.m\.taobao\.com/gw/mtop\.taobao\.cloudvideo\.video\.query url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-taobao.js
