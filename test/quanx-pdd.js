@@ -97,5 +97,15 @@ if (!parsed) {
     delPath(obj, ["shipping", "banner_above_recommend"]);
   }
 
+  // 6. search: del(.expansion)  (was jsonjq in v1, moved to JS in v2)
+  else if (/^https:\/\/api\.pinduoduo\.com\/search\?/.test(url)) {
+    delPath(obj, ["expansion"]);
+  }
+
+  // 7. order_detail_group: del(.data.goods_list)  (was jsonjq in v1, moved to JS in v2)
+  else if (/^https:\/\/api\.pinduoduo\.com\/api\/caterham\/v3\/query\/order_detail_group\?/.test(url)) {
+    delPath(obj, ["data", "goods_list"]);
+  }
+
   $done({ body: JSON.stringify(obj) });
 }

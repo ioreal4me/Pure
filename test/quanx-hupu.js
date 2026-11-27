@@ -29,12 +29,7 @@ if (/goblin\.hupu\.com\/\d+\/[\d.]+\/interfaceAd\/getOther\//i.test(url)) {
     var obj = JSON.parse($response.body);
     if (!isObj(obj)) throw new Error("jq: root is not an object");
 
-    if (/goblin\.hupu\.com\/\d\/\d\.\d\.\d+\/interfaceAd\/getOther/i.test(url)) {
-      // jq: .ad_code = -41 | .ads = [] | if has("interval") then .interval = 0 else . end
-      obj.ad_code = -41;
-      obj.ads = [];
-      if ("interval" in obj) obj.interval = 0;
-    } else if (/games\.mobileapi\.hupu\.com\/\d\/\d\.\d\.\d+\/bplapi\/user\/v1\/more/i.test(url)) {
+    if (/games\.mobileapi\.hupu\.com\/\d\/\d\.\d\.\d+\/bplapi\/user\/v1\/more/i.test(url)) {
       // jq: del(.result.inviteInfo, .result.vipInfo)
       if (isObj(obj.result)) {
         delete obj.result.inviteInfo;
