@@ -9,7 +9,7 @@
 
 ## 模块
 
-- 12306（v2：改 analyze-echo，等请求体后按 placementNo 回体，0007 快速跳过）：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-12306.snippet ｜ 脚本 quanx-12306.js ｜ 分流 无
+- 12306（v3：换墨鱼 @ddgksf2013 原版脚本，script-analyze-echo-response + 只回 body；另加 direct 分流）：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-12306.snippet ｜ 脚本 quanx-12306.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-12306-filter.snippet
 - Google：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-google.snippet ｜ 脚本 无 ｜ 分流 无
 - 酷安 coolapk：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-coolapk.snippet ｜ 脚本 quanx-coolapk.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-coolapk-filter.snippet
 - 滴滴 didi：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.snippet ｜ 脚本 quanx-didi.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi-filter.snippet ｜ v3：模式去掉尾部 \? 改前缀匹配（对齐 ZenmoFeiShi 已验证写法），jsonjq 并入 JS
