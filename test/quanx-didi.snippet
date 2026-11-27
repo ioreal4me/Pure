@@ -2,20 +2,20 @@
 hostname = as.xiaojukeji.com, conf.diditaxi.com.cn, common.diditaxi.com.cn, res.xiaojukeji.com, api.udache.com, daijia.kuaidadi.com, htwkop-st.xiaojukeji.com, htwkop.xiaojukeji.com, freight.xiaojukeji.com, poi.map.xiaojukeji.com, 162.14.157.*, 123.207.209.*, 112.53.55.225, 116.85.*, 120.241.142.*, 120.241.143.*, 139.199.240.84
 ^https://res\.xiaojukeji\.com/resapi/activity/mget(\?|$) url reject-dict
 ^https://daijia\.kuaidadi\.com(:443)?/gateway\?api=(prado\.cms\.delivery\.batch|prado\.cms\.AggregateDeliveryRemoteService\.aggregateDelivery|lj\.c\.p\.queryLevelAndRightsStatus|lj\.cos\.p\.popup) url reject-dict
-^https://api\.udache\.com/gulfstream/porsche/v\d/pSFCHomePage\? url reject-dict
+^https://api\.udache\.com/gulfstream/porsche/v\d/pSFCHomePage url reject-dict
 ^https://htwkop-st\.xiaojukeji\.com/gateway\?api=cms\.htw\.delivery\.batch url reject-dict
 ^https://freight\.xiaojukeji\.com/gateway\?api=freight\.d\.core\.multiDisplayV\d url reject-dict
-^https://as\.xiaojukeji\.com/ep/as/toggles\? url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
-^https://conf\.diditaxi\.com\.cn/homepage/v\d/other/slow\? url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
-^https://conf\.diditaxi\.com\.cn/homepage/v\d/core\? url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
-^https://conf\.diditaxi\.com\.cn/homepage/v\d/other/fast\? url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
+^https://as\.xiaojukeji\.com/ep/as/toggles url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
+^https://conf\.diditaxi\.com\.cn/homepage/v\d/other/slow url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
+^https://conf\.diditaxi\.com\.cn/homepage/v\d/core url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
+^https://conf\.diditaxi\.com\.cn/homepage/v\d/other/fast url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
 ^https://common\.diditaxi\.com\.cn/common/v\d/usercenter/layout url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
-^https://api\.udache\.com/gulfstream/porsche/v\d/dache_homepage_layout\? url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
-^https://api\.udache\.com/intercity/ticket/api/v\d/core/getFullPageInfoLayout\? url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
+^https://api\.udache\.com/gulfstream/porsche/v\d/dache_homepage_layout url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
+^https://api\.udache\.com/intercity/ticket/api/v\d/core/getFullPageInfoLayout url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
 ^https://daijia\.kuaidadi\.com(:443)?/gateway\?api=lj\.cos\.apolloConfig url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
 ^https://daijia\.kuaidadi\.com(:443)?/gateway\?api=lj\.cos\.apolloToggle url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
-^https://api\.udache\.com/gulfstream/porsche/v\d/bronze/pinchengle_homepage_layout$ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
-^https://api\.udache\.com/gulfstream/porsche/v\d/SFCHomeTab\? url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
-^https://htwkop\.xiaojukeji\.com(:443)?/gateway\?api=hm\.fa\.(querySellCardSummary|queryWelfareCenter) url jsonjq-response-body '.data = {}'
-^https://poi\.map\.xiaojukeji\.com/mapapi/(startinfo|poiinfo)\? url jsonjq-response-body 'del(.rec_destination)'
-^https://common\.diditaxi\.com\.cn/user_common/itineraryList\? url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
+^https://api\.udache\.com/gulfstream/porsche/v\d/bronze/pinchengle_homepage_layout url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
+^https://api\.udache\.com/gulfstream/porsche/v\d/SFCHomeTab url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
+^https://htwkop\.xiaojukeji\.com(:443)?/gateway\?api=hm\.fa\.(querySellCardSummary|queryWelfareCenter) url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
+^https://poi\.map\.xiaojukeji\.com/mapapi/(startinfo|poiinfo) url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js
+^https://common\.diditaxi\.com\.cn/user_common/itineraryList url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.js

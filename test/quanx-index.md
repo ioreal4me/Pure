@@ -12,7 +12,7 @@
 - 12306（v2：改 analyze-echo，等请求体后按 placementNo 回体，0007 快速跳过）：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-12306.snippet ｜ 脚本 quanx-12306.js ｜ 分流 无
 - Google：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-google.snippet ｜ 脚本 无 ｜ 分流 无
 - 酷安 coolapk：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-coolapk.snippet ｜ 脚本 quanx-coolapk.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-coolapk-filter.snippet
-- 滴滴 didi：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.snippet ｜ 脚本 quanx-didi.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi-filter.snippet
+- 滴滴 didi：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.snippet ｜ 脚本 quanx-didi.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi-filter.snippet ｜ v3：模式去掉尾部 \? 改前缀匹配（对齐 ZenmoFeiShi 已验证写法），jsonjq 并入 JS
 - 闲鱼 goofish：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-goofish.snippet ｜ 脚本 quanx-goofish.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-goofish-filter.snippet
 - 虎扑 hupu（v2：goblin 只走 echo 单条短路，去掉 (?i) 前缀）：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-hupu.snippet ｜ 脚本 quanx-hupu.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-hupu-filter.snippet
 - 京东 jd：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-jd.snippet ｜ 脚本 quanx-jd.js ｜ 分流 无

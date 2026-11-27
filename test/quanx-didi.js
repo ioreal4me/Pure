@@ -38,7 +38,7 @@ if (!parsed) {
 } else {
 
   // 1. as toggles: .data |= map(select(.name != "isUseNetConnectivity") | .assign.args.rootca_pin = 0 | .assign.args.sni_list = {})
-  if (/^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles\?/.test(url)) {
+  if (/^https:\/\/as\.xiaojukeji\.com\/ep\/as\/toggles/.test(url)) {
     if (Array.isArray(obj.data)) {
       obj.data = obj.data
         .filter(function (e) { return !(e && e.name === "isUseNetConnectivity"); })
@@ -55,13 +55,13 @@ if (!parsed) {
   }
 
   // 2. homepage slow: delpaths([["data","order_cards","new_loss_banner_card"],["data","order_cards","call_car_card_80"]])
-  else if (/^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v\d\/other\/slow\?/.test(url)) {
+  else if (/^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v\d\/other\/slow/.test(url)) {
     delPath(obj, ["data", "order_cards", "new_loss_banner_card"]);
     delPath(obj, ["data", "order_cards", "call_car_card_80"]);
   }
 
   // 3. homepage core: nav_list_card keep dache_anycar/carmate/driverservice/bike/nav_more_v3; top_nav_info keep chu_xing/freight_cargo
-  else if (/^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v\d\/core\?/.test(url)) {
+  else if (/^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v\d\/core/.test(url)) {
     var keepNav = ["dache_anycar", "carmate", "driverservice", "bike", "nav_more_v3"];
     if (isObj(obj.data) && isObj(obj.data.order_cards) && isObj(obj.data.order_cards.nav_list_card) && Array.isArray(obj.data.order_cards.nav_list_card.data)) {
       obj.data.order_cards.nav_list_card.data = obj.data.order_cards.nav_list_card.data.filter(function (e) {
@@ -77,7 +77,7 @@ if (!parsed) {
   }
 
   // 4. homepage fast: delpaths communicate_card/not_login_bottom_bar/riding_code_card/guess_card/scene_list_card, data.order_cards, car_icon.data.icon_info_new_agreement
-  else if (/^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v\d\/other\/fast\?/.test(url)) {
+  else if (/^https:\/\/conf\.diditaxi\.com\.cn\/homepage\/v\d\/other\/fast/.test(url)) {
     delPath(obj, ["data", "disorder_cards", "communicate_card"]);
     delPath(obj, ["data", "disorder_cards", "not_login_bottom_bar"]);
     delPath(obj, ["data", "disorder_cards", "riding_code_card"]);
@@ -101,7 +101,7 @@ if (!parsed) {
   }
 
   // 6. dache_homepage_layout: .data.instances keep keys matching test("feed_back_|dache_main_member|order_container_|dache_main_core_icon|dache_main_card_")
-  else if (/^https:\/\/api\.udache\.com\/gulfstream\/porsche\/v\d\/dache_homepage_layout\?/.test(url)) {
+  else if (/^https:\/\/api\.udache\.com\/gulfstream\/porsche\/v\d\/dache_homepage_layout/.test(url)) {
     if (isObj(obj.data) && isObj(obj.data.instances)) {
       var re = /feed_back_|dache_main_member|order_container_|dache_main_core_icon|dache_main_card_/;
       var inst = {};
@@ -113,7 +113,7 @@ if (!parsed) {
   }
 
   // 7. intercity getFullPageInfoLayout: .data.disorder_components keep 5 names
-  else if (/^https:\/\/api\.udache\.com\/intercity\/ticket\/api\/v\d\/core\/getFullPageInfoLayout\?/.test(url)) {
+  else if (/^https:\/\/api\.udache\.com\/intercity\/ticket\/api\/v\d\/core\/getFullPageInfoLayout/.test(url)) {
     var keepNames = ["history_order_card", "inprogress_order_card", "station_calendar", "main_card_v2", "user_history_order"];
     if (isObj(obj.data) && Array.isArray(obj.data.disorder_components)) {
       obj.data.disorder_components = obj.data.disorder_components.filter(function (e) {
@@ -151,14 +151,14 @@ if (!parsed) {
   }
 
   // 10. bronze pinchengle_homepage_layout: .data.instances keep 5 keys
-  else if (/^https:\/\/api\.udache\.com\/gulfstream\/porsche\/v\d\/bronze\/pinchengle_homepage_layout$/.test(url)) {
+  else if (/^https:\/\/api\.udache\.com\/gulfstream\/porsche\/v\d\/bronze\/pinchengle_homepage_layout/.test(url)) {
     if (isObj(obj.data) && isObj(obj.data.instances)) {
       obj.data.instances = keepKeys(obj.data.instances, ["dacheanycar-certificates-1", "main-card-1", "map-1", "nav-1", "tool-container-1"]);
     }
   }
 
   // 11. SFCHomeTab: .data.tab_list keep tab_id passenger/driver
-  else if (/^https:\/\/api\.udache\.com\/gulfstream\/porsche\/v\d\/SFCHomeTab\?/.test(url)) {
+  else if (/^https:\/\/api\.udache\.com\/gulfstream\/porsche\/v\d\/SFCHomeTab/.test(url)) {
     if (isObj(obj.data) && Array.isArray(obj.data.tab_list)) {
       obj.data.tab_list = obj.data.tab_list.filter(function (e) {
         return e && (e.tab_id === "passenger" || e.tab_id === "driver");
@@ -167,12 +167,22 @@ if (!parsed) {
   }
 
   // 12. itineraryList: del(.data.tab_nav[]?.tab_param)
-  else if (/^https:\/\/common\.diditaxi\.com\.cn\/user_common\/itineraryList\?/.test(url)) {
+  else if (/^https:\/\/common\.diditaxi\.com\.cn\/user_common\/itineraryList/.test(url)) {
     if (isObj(obj.data) && Array.isArray(obj.data.tab_nav)) {
       obj.data.tab_nav.forEach(function (e) {
         if (e && typeof e === "object") delete e.tab_param;
       });
     }
+  }
+
+  // 13. htwkop gateway hm.fa.*: .data = {} (was jsonjq, moved to JS in v3)
+  else if (/^https:\/\/htwkop\.xiaojukeji\.com(:443)?\/gateway\?api=hm\.fa\./.test(url)) {
+    obj.data = {};
+  }
+
+  // 14. poi map startinfo/poiinfo: del(.rec_destination) (was jsonjq, moved to JS in v3)
+  else if (/^https:\/\/poi\.map\.xiaojukeji\.com\/mapapi\/(startinfo|poiinfo)/.test(url)) {
+    delPath(obj, ["rec_destination"]);
   }
 
   $done({ body: JSON.stringify(obj) });
