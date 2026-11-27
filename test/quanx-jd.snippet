@@ -1,7 +1,0 @@
-; 京东 QuanX 测试 — converted from Egern/jd.yaml (url_rewrites 3 + body_rewrites 1, no rules section in source)
-; FLAG: source entry 3 was Egern reject-video; Quantumult X has no reject-video in the docs snapshot -> closest documented equivalent reject-img used.
-hostname = api.m.jd.com, *.360buyimg.com
-^https?://api\.m\.jd\.com/client\.action\?(?:[^#]*&)?functionId=queryPagePopWindow(?:&[^#]*)?$ url reject-dict
-^https?://[^/]+\.360buyimg\.com/mobilecms/s1\d{3}x2\d{3}_jfs/ url reject-img
-^https?://[^/]*360buyimg\.com/material-video/ url reject-img
-^https?://api\.m\.jd\.com/client\.action\?(?:[^#]*&)?functionId=start(?:&[^#]*)?$ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-jd.js
