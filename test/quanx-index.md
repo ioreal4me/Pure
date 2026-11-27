@@ -12,12 +12,12 @@
 - 12306（v3：换墨鱼 @ddgksf2013 原版脚本，script-analyze-echo-response + 只回 body；另加 direct 分流）：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-12306.snippet ｜ 脚本 quanx-12306.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-12306-filter.snippet
 - Google：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-google.snippet ｜ 脚本 无 ｜ 分流 无
 - 酷安 coolapk：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-coolapk.snippet ｜ 脚本 quanx-coolapk.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-coolapk-filter.snippet
-- 滴滴 didi：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.snippet ｜ 脚本 quanx-didi.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi-filter.snippet ｜ v3：模式去掉尾部 \? 改前缀匹配（对齐 ZenmoFeiShi 已验证写法），jsonjq 并入 JS
+- 滴滴 didi（v4：ZenmoFeiShi 原版全量替换 — 12 jsonjq + 12 reject-dict，分流并入 filter 文件）：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi.snippet ｜ 脚本 无 ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-didi-filter.snippet
 - 闲鱼 goofish：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-goofish.snippet ｜ 脚本 quanx-goofish.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-goofish-filter.snippet
 - 虎扑 hupu（v2：goblin 只走 echo 单条短路，去掉 (?i) 前缀）：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-hupu.snippet ｜ 脚本 quanx-hupu.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-hupu-filter.snippet
 - 京东 jd：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-jd.snippet ｜ 脚本 quanx-jd.js ｜ 分流 无
 - 库街区 kuro：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-kuro.snippet ｜ 脚本 无 ｜ 分流 无
 - 米游社 miHoYo：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-mihoyo.snippet ｜ 脚本 quanx-mihoyo.js ｜ 分流 无
-- 拼多多 pdd（v2：去掉 url-and-header 两行、jsonjq 并入 JS；若仍失效，在 [general] 加 udp_drop_list = QUIC 后再测）：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-pdd.snippet ｜ 脚本 quanx-pdd.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-pdd-filter.snippet
+- 拼多多 pdd（v3：ZenmoFeiShi 原版替换 — Pinduoduo.js 字符串扫描版 + titan/IP 分流）：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-pdd.snippet ｜ 脚本 quanx-pdd.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-pdd-filter.snippet
 - 淘宝 taobao：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-taobao.snippet ｜ 脚本 quanx-taobao.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-taobao-filter.snippet
 - 微博轻享版 weibo：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-weibo.snippet ｜ 脚本 quanx-weibo.js ｜ 分流 无

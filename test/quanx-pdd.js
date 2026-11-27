@@ -1,111 +1,90 @@
-// 拼多多 — Quantumult X script-response-body
-// Converted from Egern/pdd.yaml: each branch merges all source jq entries for that URL
-// (applied in source order; the duplicated irregular_banner_dy deletion is idempotent).
-// Parse error -> $done({}) passthrough.
+const url = $request.url;
+let body = $response.body;
 
-var url = $request.url;
+const keepTabs = ["index.html", "chat_list.html", "personal.html"];
 
-function isObj(x) {
-  return x !== null && typeof x === "object" && !Array.isArray(x);
-}
-
-function delPath(o, path) {
-  var cur = o;
-  for (var i = 0; i < path.length - 1; i++) {
-    if (cur === null || typeof cur !== "object") return;
-    cur = cur[path[i]];
+function scanFields(s, depthWant, keys) {
+  const found = {};
+  let depth = 0, i = 0, n = s.length, lastKey = null, keyDepth = -1;
+  while (i < n) {
+    const c = s[i];
+    if (c === '"') {
+      let j = i + 1;
+      while (j < n && s[j] !== '"') j += s[j] === "\\" ? 2 : 1;
+      const str = s.slice(i + 1, j);
+      let k = j + 1;
+      while (k < n && /\s/.test(s[k])) k++;
+      if (s[k] === ":" && depth === depthWant && keys.includes(str)) {
+        lastKey = str;
+        keyDepth = depth;
+        k++;
+        while (k < n && /\s/.test(s[k])) k++;
+        found[str] = { start: k };
+        i = k;
+        continue;
+      }
+      i = j + 1;
+      continue;
+    }
+    if (c === "{" || c === "[") depth++;
+    else if (c === "}" || c === "]") {
+      depth--;
+      if (lastKey && depth === keyDepth && found[lastKey].end === undefined) {
+        found[lastKey].end = i + 1;
+        lastKey = null;
+      }
+    } else if (lastKey && depth === keyDepth && c === ",") {
+      if (found[lastKey].end === undefined) found[lastKey].end = i;
+      lastKey = null;
+    }
+    i++;
   }
-  if (cur !== null && typeof cur === "object") delete cur[path[path.length - 1]];
+  return found;
 }
 
-var obj = null;
-var parsed = true;
+function splice(s, found, fn) {
+  const items = Object.keys(found).map(k => ({ k, ...found[k] })).filter(x => x.end > x.start).sort((a, b) => b.start - a.start);
+  let changed = false;
+  for (const it of items) {
+    const raw = s.slice(it.start, it.end);
+    const rep = fn(it.k, raw);
+    if (rep !== null && rep !== raw) {
+      s = s.slice(0, it.start) + rep + s.slice(it.end);
+      changed = true;
+    }
+  }
+  return changed ? s : null;
+}
+
+function pageOf(link) {
+  return String(link || "").split("?")[0].split("#")[0];
+}
+
 try {
-  obj = JSON.parse($response.body);
-} catch (e) {
-  parsed = false;
-}
-
-if (!parsed) {
-  $done({});
-} else {
-
-  // 1. homepage hub (5 source jq entries merged):
-  //    del result.dy_module.irregular_banner_dy, result.icon_set, result.search_bar_hot_query;
-  //    bottom_tabs?/buffer_bottom_tabs? keep link in (index.html, chat_list.html, personal.html);
-  //    all_top_opts elements del(.selected_image, .image, .height, .width)
-  if (/^https:\/\/api\.pinduoduo\.com\/api\/alexa\/homepage\/hub\?/.test(url)) {
-    delPath(obj, ["result", "dy_module", "irregular_banner_dy"]);
-    delPath(obj, ["result", "icon_set"]);
-    delPath(obj, ["result", "search_bar_hot_query"]);
-    var keepTabs = ["index.html", "chat_list.html", "personal.html"];
-    if (isObj(obj.result) && Array.isArray(obj.result.bottom_tabs)) {
-      obj.result.bottom_tabs = obj.result.bottom_tabs.filter(function (e) {
-        return e && keepTabs.indexOf(e.link) >= 0;
-      });
-    }
-    if (isObj(obj.result) && Array.isArray(obj.result.buffer_bottom_tabs)) {
-      obj.result.buffer_bottom_tabs = obj.result.buffer_bottom_tabs.filter(function (e) {
-        return e && keepTabs.indexOf(e.link) >= 0;
-      });
-    }
-    if (isObj(obj.result) && Array.isArray(obj.result.all_top_opts)) {
-      obj.result.all_top_opts.forEach(function (e) {
-        if (e && typeof e === "object") {
-          delete e.selected_image;
-          delete e.image;
-          delete e.height;
-          delete e.width;
-        }
-      });
-    }
+  let out = null;
+  if (/\/api\/alexa\/homepage\/hub/.test(url)) {
+    const f = scanFields(body, 2, ["bottom_tabs", "buffer_bottom_tabs"]);
+    out = splice(body, f, (k, raw) => {
+      const arr = JSON.parse(raw);
+      if (!Array.isArray(arr)) return null;
+      const kept = arr.filter(t => t && keepTabs.includes(pageOf(t.link)));
+      if (!kept.length || kept.length === arr.length) return null;
+      return JSON.stringify(kept);
+    });
+  } else if (/\/hungary\/(window\/)?global\//.test(url)) {
+    const f = scanFields(body, 1, ["list"]);
+    out = splice(body, f, (k, raw) => {
+      const arr = JSON.parse(raw);
+      return Array.isArray(arr) && arr.length ? "[]" : null;
+    });
+  } else if (/\/api\/growth\/nagato\/app\/index\/gather/.test(url)) {
+    const f = scanFields(body, 1, ["newer_index_banner", "push_banner"]);
+    out = splice(body, f, (k, raw) => {
+      const o = JSON.parse(raw);
+      return o && typeof o === "object" && o.valid_data !== false ? '{"valid_data":false}' : null;
+    });
   }
+  if (out !== null) body = out;
+} catch (e) {}
 
-  // 2. personal hub (4 source jq entries merged):
-  //    del monthly_card_entrance, personal_center_style_v2_vo, icon_set.icons, icon_set.top_personal_icons
-  else if (/^https:\/\/api\.pinduoduo\.com\/api\/philo\/personal\/hub\?/.test(url)) {
-    delPath(obj, ["monthly_card_entrance"]);
-    delPath(obj, ["personal_center_style_v2_vo"]);
-    delPath(obj, ["icon_set", "icons"]);
-    delPath(obj, ["icon_set", "top_personal_icons"]);
-  }
-
-  // 3. oak integration render (3 source jq entries merged):
-  //    del bottom_section_list, ui.bottom_section, ui.live_section.float_info
-  else if (/^https:\/\/api\.pinduoduo\.com\/api\/oak\/integration\/render\?/.test(url)) {
-    delPath(obj, ["bottom_section_list"]);
-    delPath(obj, ["ui", "bottom_section"]);
-    delPath(obj, ["ui", "live_section", "float_info"]);
-  }
-
-  // 4. order_list_v4: .orders |= map(.order_buttons |= map(del(.order_growth_tip)))
-  else if (/^https:\/\/api\.pinduoduo\.com\/api\/aristotle\/order_list_v4\?/.test(url)) {
-    if (Array.isArray(obj.orders)) {
-      obj.orders.forEach(function (o) {
-        if (o && Array.isArray(o.order_buttons)) {
-          o.order_buttons.forEach(function (b) {
-            if (b && typeof b === "object") delete b.order_growth_tip;
-          });
-        }
-      });
-    }
-  }
-
-  // 5. order/ (2 source jq entries merged): del marketing_banner_vo, shipping.banner_above_recommend
-  else if (/^https:\/\/api\.pinduoduo\.com\/order\//.test(url)) {
-    delPath(obj, ["marketing_banner_vo"]);
-    delPath(obj, ["shipping", "banner_above_recommend"]);
-  }
-
-  // 6. search: del(.expansion)  (was jsonjq in v1, moved to JS in v2)
-  else if (/^https:\/\/api\.pinduoduo\.com\/search\?/.test(url)) {
-    delPath(obj, ["expansion"]);
-  }
-
-  // 7. order_detail_group: del(.data.goods_list)  (was jsonjq in v1, moved to JS in v2)
-  else if (/^https:\/\/api\.pinduoduo\.com\/api\/caterham\/v3\/query\/order_detail_group\?/.test(url)) {
-    delPath(obj, ["data", "goods_list"]);
-  }
-
-  $done({ body: JSON.stringify(obj) });
-}
+$done({ body });
