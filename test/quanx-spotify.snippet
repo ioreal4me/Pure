@@ -1,0 +1,15 @@
+#!name = Spotify QuanX combined test v2
+#!author = app2smile / devchristian1337 / Reukix combined
+hostname = spclient.wg.spotify.com, *spclient.spotify.com
+^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(user-customization-service\/v1\/customize|nebula\/v\d+\/configuration\/attributes|remote-config-resolver\/v\d+\/configuration) url script-request-header https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-spotify.js
+^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(bootstrap\/v1\/bootstrap|user-customization-service\/v1\/customize)$ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-spotify.js
+^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/(nebula\/v\d+\/configuration\/attributes|remote-config-resolver\/v\d+\/configuration) url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-spotify.js
+^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/casita\/v\d+\/home url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-spotify.js
+^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/browsita\/v.\/browse url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-spotify.js
+^https:\/\/(spclient\.wg\.spotify\.com|.*-spclient\.spotify\.com(:443)?)\/scrollsita\/v[0-9]+\/scroll\/spotify: url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-spotify.js
+^https:\/\/(spclient\.wg|.*-spclient)\.spotify\.com(:443)?\/pendragon url reject-dict
+^https:\/\/(spclient\.wg|.*-spclient)\.spotify\.com(:443)?\/pam-view-service\/ url reject
+^https:\/\/(spclient\.wg|.*-spclient)\.spotify\.com(:443)?\/(ads\/|ad-logic\/|premium-marketing\/upsellOffer) url reject
+^https:\/\/(spclient\.wg|.*-spclient)\.spotify\.com(:443)?\/.*\/ad-on-app-open url reject
+^https:\/\/(.*-spclient\.spotify\.com(:443)?|spclient\.wg\.spotify\.com)\/gabo-receiver-service url reject-200
+^https:\/\/.*37i9dQZF1EYkqdzj48dyYq url reject
