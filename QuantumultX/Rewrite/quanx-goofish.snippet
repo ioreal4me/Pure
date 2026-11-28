@@ -1,0 +1,51 @@
+; 闲鱼 QuanX 测试 (rewrites) — converted from Egern/goofish.yaml (rules 2, rewrites 31, scriptings 1 / Script/goofish.js 7 branches)
+; Filter rules live in quanx-goofish-filter.snippet (filters cannot live in a rewrite snippet).
+; AND rule: source is url_regex (^http://.+/amdc/mobileDispatch) + user_agent (%E9%97%B2%E9%B1%BC* = 闲鱼*) -> REJECT.
+; QuanX filter syntax has no AND rule, but the documented url-and-header rewrite type
+; (sample-1.9.0-inapp.conf) matches URL regex AND header-string regex, so it is used here to
+; preserve the AND semantics (glob trailing * dropped: the header regex is unanchored).
+; If a plain url reject is preferred instead, swap the amdc line for the commented one below it
+; (note: that broadens the rule to ALL amdc/mobileDispatch requests regardless of user-agent).
+; All body work (18 response_jq entries + the Egern script's 7 branches, my.adapter merged once)
+; runs through ONE script-response-body script: quanx-goofish.js.
+hostname = acs.m.goofish.com, g-acs.m.goofish.com
+^http://.+/amdc/mobileDispatch \r\nUser-Agent:[^\r\n]*%E9%97%B2%E9%B1%BC url-and-header reject
+;^http://.+/amdc/mobileDispatch url reject
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlecommerce\.splash\.ads/ url reject-dict
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlehome\.widget\.refresh\.get/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.home\.whale\.modulet/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.user\.strategy\.list/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.fun\.follow\.feed\.list/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.fun\.follow\.recommend\.feed\.list/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlehome\.home\.community/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlehome\.home\.newitem\.page/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.local\.home\.top/ url reject-dict
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.item\.buy\.feeds/ url reject-dict
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlemtopsearch\.search\.shade/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlehome\.magic\.home\.page\.list/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlemtopsearch\.search\.discover/1\.0 url reject-dict
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlemtopsearch\.item\.search\.activate/ url reject-dict
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.playboy\.recommend/1\.0 url reject
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.trade\.full\.info/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.item\.resell\.recommendorhotcate/1\.0 url reject-dict
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlehome\.idle\.coin\.nextfresh/1\.0 url reject-dict
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.idle\.trade\.item\.recommend\.render/ url reject-dict
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlemtopsearch\.detailpage\.search\.shade/ url reject-dict
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlemessage\.user\.query\.top\.resource url reject-dict
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.item\.recommend\.tab url reject-dict
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.group\.myself\.banner/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.playboy\.recommend/2\.0 url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.playboy\.recommend/3\.0 url reject
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.fun\.follow\.often\.visit/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.circle\.myself\.banner/1\.0 url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.circle\.visited/1\.0 url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idlemtopsearch\.search\.activate\.tablist/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.taobao\.idle\.trade\.order\.render/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+(?i)^https://acs\.m\.goofish\.com/gw/mtop\.idle\.user\.page\.my\.adapter/ url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+; --- scriptings entry (Script/goofish.js) endpoints not already covered above ---
+^https://(?:acs|g-acs)\.m\.goofish\.com/gw/mtop\.taobao\.idlehome\.home\.nextfresh(?:/|$) url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+^https://(?:acs|g-acs)\.m\.goofish\.com/gw/mtop\.taobao\.idle\.local\.home(?:/|$) url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+^https://(?:acs|g-acs)\.m\.goofish\.com/gw/mtop\.taobao\.idlehome\.home\.circle\.list(?:/|$) url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+^https://(?:acs|g-acs)\.m\.goofish\.com/gw/mtop\.taobao\.idle\.local\.nearby\.itemdetail\.enter(?:/|$) url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+^https://(?:acs|g-acs)\.m\.goofish\.com/gw/mtop\.taobao\.idlemtopsearch\.search(?:/|$) url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
+^https://(?:acs|g-acs)\.m\.goofish\.com/gw/mtop\.taobao\.idle\.local\.flow\.plat\.section(?:/|$) url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/QuantumultX/Script/quanx-goofish.js
