@@ -1,0 +1,8 @@
+; 闲鱼 QuanX 测试 (filters) — converted from Egern/goofish.yaml rules: 1 of 2 rules is a filter rule.
+; Subscribe via [filter_remote], NOT rewrite_remote.
+; Rule 1: domain_suffix iyes.youku.com -> REJECT = host-suffix.
+; Rule 2 (the AND rule: url_regex + user_agent) is NOT here: QuanX filter syntax has no AND
+; rule and there is no standalone user_agent rule in the source (the user_agent pattern only
+; exists as one half of the AND rule). It is converted in quanx-goofish.snippet as a
+; url-and-header reject rewrite, preserving the AND semantics.
+host-suffix, iyes.youku.com, reject

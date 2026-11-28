@@ -1,0 +1,12 @@
+; 酷安 Quantumult X rewrite snippet — converted from Egern coolapk.yaml (Kris's fixed version)
+; Subscribe via [rewrite_remote]; the 13 domain REJECT rules live in quanx-coolapk-filter.snippet ([filter_remote]).
+; All response_jq filters are branches in quanx-coolapk.js (script-response-body).
+hostname = api.coolapk.com
+^https://api\.coolapk\.com/v6/search\?.*type=hotSearch url reject-dict
+^https://api\.coolapk\.com/v6/feed/detail\? url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Script/quanx-coolapk.js
+^https://api\.coolapk\.com/v6/feed/replyList url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Script/quanx-coolapk.js
+^https://api\.coolapk\.com/v6/main/dataList url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Script/quanx-coolapk.js
+^https://api\.coolapk\.com/v6/page/dataList url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Script/quanx-coolapk.js
+^https://api\.coolapk\.com/v6/main/indexV8 url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Script/quanx-coolapk.js
+^https://api\.coolapk\.com/v6/main/init url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Script/quanx-coolapk.js
+^https://api\.coolapk\.com/v6/account/loadConfig\?key=my_page_card_config url script-response-body https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Script/quanx-coolapk.js
