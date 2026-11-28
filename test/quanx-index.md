@@ -9,10 +9,10 @@
 
 ## 模块
 
-- Google：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-google.snippet ｜ 脚本 无 ｜ 分流 无
-- 酷安 coolapk：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-coolapk.snippet ｜ 脚本 quanx-coolapk.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-coolapk-filter.snippet
-- 闲鱼 goofish：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-goofish.snippet ｜ 脚本 quanx-goofish.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-goofish-filter.snippet
+- 已移至 Quantumult X/Rewrite/｜Google：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Rewrite/quanx-google.snippet ｜ 脚本 无 ｜ 分流 无
+- 已移至 Quantumult X/Rewrite/ + Script/｜酷安 coolapk：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Rewrite/quanx-coolapk.snippet ｜ 脚本 Quantumult X/Script/quanx-coolapk.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Rewrite/quanx-coolapk-filter.snippet
+- 已移至 Quantumult X/Rewrite/ + Script/｜闲鱼 goofish：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Rewrite/quanx-goofish.snippet ｜ 脚本 Quantumult X/Script/quanx-goofish.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Rewrite/quanx-goofish-filter.snippet
 - 库街区 kuro：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-kuro.snippet ｜ 脚本 无 ｜ 分流 无
 - 米游社 miHoYo：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-mihoyo.snippet ｜ 脚本 quanx-mihoyo.js ｜ 分流 无
-- 微博轻享版 weibo：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-weibo.snippet ｜ 脚本 quanx-weibo.js ｜ 分流 无
-- Spotify（combined test）：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-spotify.snippet ｜ 脚本 quanx-spotify.js ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-spotify-filter.snippet ｜ 来源 app2smile（proto 补丁）+ devchristian1337（广告接口与过滤脚本）+ Reukix（reject 清单）；用法：先登录 Spotify 再启用、重启 App；音质不能开超高（proto 补丁固有限制）；resolver/nebula 的 proto 分支为实验性
+- 已移至 Quantumult X/Rewrite/ + Script/｜微博轻享版 weibo：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Rewrite/quanx-weibo.snippet ｜ 脚本 Quantumult X/Script/quanx-weibo.js ｜ 分流 无
+- 已移至 Quantumult X/Spotify/｜Spotify（combined test）：重写 https://raw.githubusercontent.com/ioreal4me/iOS/main/Quantumult%20X/Spotify/quanx-spotify.snippet ｜ 脚本 quanx-spotify.js（同目录）｜ CDN 版 https://cdn.jsdelivr.net/gh/ioreal4me/iOS@main/Quantumult%20X/Spotify/quanx-spotify-cdn.snippet ｜ 分流 https://raw.githubusercontent.com/ioreal4me/iOS/main/test/quanx-spotify-filter.snippet（仍在 test/）｜ 来源 app2smile（proto 补丁）+ devchristian1337（广告接口与过滤脚本）+ Reukix（reject 清单）；用法：先登录 Spotify 再启用、重启 App；音质不能开超高（proto 补丁固有限制）；resolver/nebula 的 proto 分支为实验性
